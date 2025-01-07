@@ -3,7 +3,7 @@ function Log-Message {
     param (
         [string]$Message
     )
-    $timestamp = (Get-Date).ToString("yyyy-MM-dd HH:mm:ss")
+    $timestamp = (Get-Date).ToString("dd-MM-yyyy HH:mm:ss")
     $logEntry = "$timestamp - $Message"
     Add-Content -Path $LogFilePath -Value $logEntry
     Write-Output $logEntry
@@ -32,8 +32,8 @@ if ($OSVersion -eq "Windows") {
     Log-Message "RAM Status (Windows): Total: $totalRAM GB, Used: $usedRAM GB, Free: $freeRAM GB"
 } elseif ($OSVersion -eq "Linux") {
     $ramInfo = Get-Content /proc/meminfo
-    $totalRAM = ($ramInfo | Select-String "MemTotal" | ForEach-Object { ($ -split "\s+")[1] }) -as [int]
-    $freeRAM = ($ramInfo | Select-String "MemFree" | ForEach-Object { ($ -split "\s+")[1] }) -as [int]
+    $totalRAM = ($ramInfo | Select-String "MemTotal" | ForEach-Object { ($_ -split "\s+")[1] }) -as [int]
+    $freeRAM = ($ramInfo | Select-String "MemFree" | ForEach-Object { ($_ -split "\s+")[1] }) -as [int]
     $usedRAM = $totalRAM - $freeRAM
     $totalRAMGB = [math]::round($totalRAM / 1024, 2)
     $usedRAMGB = [math]::round($usedRAM / 1024, 2)
