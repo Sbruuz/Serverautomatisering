@@ -8,7 +8,7 @@ if (-Not (Test-Path $inputFile)) {
     exit 1
 }
 
-# Læs CSV-filen med semikolon som separator
+# Læser CSV-filen med semikolon som separator
 $data = Import-Csv -Path $inputFile -Delimiter ';'
 
 # Iterer gennem rækker og anonymiser data
@@ -23,7 +23,7 @@ $anonymizedData = foreach ($row in $data) {
 }
 
 
-# Gem den anonymiserede data i en ny CSV-fil med semikolon som separator
+# Gemmer den anonymiserede data i en ny CSV-fil med semikolon som separator
 $anonymizedData | Export-Csv -Path $outputFile -Delimiter ';' -NoTypeInformation
 
 Write-Host "Anonymiseringen er fuldført. Data er gemt i $outputFile" -ForegroundColor Green
