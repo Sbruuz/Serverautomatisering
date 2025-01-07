@@ -1,3 +1,34 @@
+<#
+.SYNOPSIS
+Logs system status information (e.g., OS, RAM, CPU, Disk, Uptime) to a log file and displays it.
+
+.DESCRIPTION
+This script detects the operating system (Windows or Linux), logs and displays the following information. 
+- Operating System
+- Total, Used, and Free RAM
+- CPU usage
+- Total, Used, and Free Disk Space
+- System Uptime
+It writes the logs to a specified file (depending on the OS) and outputs key information to the console.
+
+.PARAMETER Message
+The message to log to the specified log file.
+
+.EXAMPLE
+PS C:\> ./SystemStatus.ps1
+This runs the script to detect the OS and log system status information to a file.
+
+PS C:\> ./SystemStatus.ps1
+Logs information like CPU usage, disk space, memory status, and uptime based on the detected OS.
+
+
+.NOTES
+Author: Sofie Ruus
+Version: 1.0
+Date: 07-01-2025
+#>
+
+
 #Function to log messages
 function Log-Message {
     param (
@@ -37,7 +68,7 @@ if ($OSVersion -eq "Windows") {
     $usedRAM = $totalRAM - $freeRAM
     $totalRAMGB = [math]::round($totalRAM / 1024, 2)
     $usedRAMGB = [math]::round($usedRAM / 1024, 2)
-    Log-Message "RAM Status (Linux): Total: $totalRAMGB GB, Used: $usedRAMGB GB, Free: $([math]::round($freeRAM / 1024, 2)) GB"
+    Log-Message "RAM Status (Linux): Total: $totalRAMGB MB, Used: $usedRAMGB MB, Free: $([math]::round($freeRAM / 1024, 2)) MB"
 } else {
     Log-Message "Unable to retrieve RAM status: Unknown Operating System."
 }
