@@ -38,7 +38,7 @@ function Log-Message {
 }
 
 #Defines name of logfile
-    $LogFileName = "StatusLog.log"
+$LogFileName = "StatusLog.log"
 
 #OS Detection
 if ($env:OS -eq "Windows_NT") {
@@ -47,19 +47,21 @@ if ($env:OS -eq "Windows_NT") {
     $Logfile = $LogFilePath + $LogFileName
 
     #Create file and path if not existing in Windows
-    if (!(test-path $LogFilePath))
-        {
-            New-Item -ItemType Directory -Path $LogFilePath
-            Write-Host "The path $LogFilePath was not found" -ForegroundColor Red
-        } else {
-            Write-Host "The path $LogFilePath was found" -ForegroundColor Green
-        }
-        if (!(test-path $LogFile))
-        {
-            New-Item -ItemType File -Path ($LogFile)
-            Write-Host "The path $LogFilePath has been created" -ForegroundColor Green   
-        }
-        
+    if (!(test-path $LogFilePath)) {
+        New-Item -ItemType Directory -Path $LogFilePath
+        Write-Host "The path $LogFilePath was not found" -ForegroundColor Red
+        Write-Host "The path $LogFilePath has been created" -ForegroundColor Green
+    } else {
+        Write-Host "The path $LogFilePath was found" -ForegroundColor Green
+    }
+    
+    if (!(test-path $LogFile)) {
+        New-Item -ItemType File -Path $LogFile
+        Write-Host "The logfile $LogFile was not found" -ForegroundColor Red
+        Write-Host "The logfile $LogFile has been created" -ForegroundColor Green
+    } else {
+        Write-Host "The path $LogFile was found" -ForegroundColor Green
+    }  
 
 } elseif ($env:TERM -eq "Linux") {
     $OSVersion = "Linux"
@@ -67,18 +69,21 @@ if ($env:OS -eq "Windows_NT") {
     $Logfile = $LogFilePath + $LogFileName
 
     #Create file and path if not existing in Linux
-    if (!(test-path $LogFilePath))
-    {
+    if (!(test-path $LogFilePath)) {
         New-Item -ItemType Directory -Path $LogFilePath
         Write-Host "The path $LogFilePath was not found" -ForegroundColor Red
+        Write-Host "The path $LogFilePath has been created" -ForegroundColor Green
     } else {
         Write-Host "The path $LogFilePath was found" -ForegroundColor Green
     }
-    if (!(test-path $LogFile))
-    {
-        New-Item -ItemType File -Path ($LogFile)
-        Write-Host "The path $LogFilePath has been created" -ForegroundColor Green   
-    }
+    
+    if (!(test-path $LogFile)) {
+        New-Item -ItemType File -Path $LogFile
+        Write-Host "The logfile $LogFile was not found" -ForegroundColor Red
+        Write-Host "The logfile $LogFile has been created" -ForegroundColor Green
+    } else {
+        Write-Host "The path $LogFile was found" -ForegroundColor Green
+    } 
 
 } else {
     $OSVersion = "Unknown"
@@ -169,4 +174,3 @@ try {
 } catch {
     Log-Message "Unable to retrieve system uptime: $_"
 }
-
