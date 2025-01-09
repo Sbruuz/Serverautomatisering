@@ -1,0 +1,17 @@
+cd "path"
+git init
+git status
+git add .
+git status
+git commit -m "Initial commit"
+git config --global user.email "sofi623i@zbc.dk"
+git config --global user.name "SofieRuus"
+
+cd C:\Users\sofie\OneDrive - EFIF\ZBC\H3\Serverautomatisering 2
+git add .
+git commit -m "Ram test1"
+git push
+git status
+
+
+https://raw.githubusercontent.com/Sbruuz/Serverautomatisering/refs/heads/main/SystemInfo.ps1

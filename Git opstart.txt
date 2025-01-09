@@ -1,8 +1,0 @@
-cd "path"
-git init
-git status
-git add .
-git status
-git commit -m "Initial commit"
-git config --global user.email "sofi623i@zbc.dk"
-git config --global user.name "SofieRuus"
