@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-Logs system status information (e.g., OS, RAM, CPU, Disk, Uptime) to a log file and displays it.
+Logs system status information (OS, RAM, CPU, Disk, Uptime) to a log file and displays it.
 
 .DESCRIPTION
 This script detects the operating system (Windows or Linux), logs and displays the following information. 
@@ -15,19 +15,17 @@ It writes the logs to a specified file (depending on the OS) and outputs key inf
 The message to log to the specified log file.
 
 .EXAMPLE
-PS C:\> ./SystemStatus.ps1
+PS C:\> ./SystemInfo.ps1
 This runs the script to detect the OS and log system status information to a file.
 
-PS C:\> ./SystemStatus.ps1
+PS C:\> ./SystemInfo.ps1
 Logs information like CPU usage, disk space, memory status, and uptime based on the detected OS.
-
 
 .NOTES
 Author: Sofie Ruus
 Version: 1.0
 Date: 07-01-2025
 #>
-
 
 #Function to log messages
 function Log-Message {
@@ -44,7 +42,7 @@ function Log-Message {
 if ($env:OS -eq "Windows_NT") {
     $OSVersion = "Windows"
     $LogFilePath = "C:\temp\StatusLog.log"
-} elseif (Test-Path "/tmp/") {
+} elseif ($env:TERM -eq "Linux") {
     $OSVersion = "Linux"
     $LogFilePath = "/tmp/StatusLog.log"
 } else {
