@@ -23,28 +23,63 @@ Logs information like CPU usage, disk space, memory status, and uptime based on 
 
 .NOTES
 Author: Sofie Ruus
-Version: 1.0
-Date: 07-01-2025
+Version: 2.0
+Date: 09-01-2025
 #>
 
-#Function to log messages
 function Log-Message {
     param (
         [string]$Message
     )
     $timestamp = (Get-Date).ToString("dd-MM-yyyy HH:mm:ss")
     $logEntry = "$timestamp - $Message"
-    Add-Content -Path $LogFilePath -Value $logEntry
+    Add-Content -Path $Logfile -Value $logEntry
     Write-Output $logEntry
 }
+
+#Defines name of logfile
+    $LogFileName = "StatusLog.log"
 
 #OS Detection
 if ($env:OS -eq "Windows_NT") {
     $OSVersion = "Windows"
-    $LogFilePath = "C:\temp\StatusLog.log"
+    $LogFilePath = "C:\temp\logs\"
+    $Logfile = $LogFilePath + $LogFileName
+
+    #Create file and path if not existing in Windows
+    if (!(test-path $LogFilePath))
+        {
+            New-Item -ItemType Directory -Path $LogFilePath
+            Write-Host "The path $LogFilePath was not found" -ForegroundColor Red
+        } else {
+            Write-Host "The path $LogFilePath was found" -ForegroundColor Green
+        }
+        if (!(test-path $LogFile))
+        {
+            New-Item -ItemType File -Path ($LogFile)
+            Write-Host "The path $LogFilePath has been created" -ForegroundColor Green   
+        }
+        
+
 } elseif ($env:TERM -eq "Linux") {
     $OSVersion = "Linux"
-    $LogFilePath = "/tmp/StatusLog.log"
+    $LogFilePath = "/tmp/logs/"
+    $Logfile = $LogFilePath + $LogFileName
+
+    #Create file and path if not existing in Linux
+    if (!(test-path $LogFilePath))
+    {
+        New-Item -ItemType Directory -Path $LogFilePath
+        Write-Host "The path $LogFilePath was not found" -ForegroundColor Red
+    } else {
+        Write-Host "The path $LogFilePath was found" -ForegroundColor Green
+    }
+    if (!(test-path $LogFile))
+    {
+        New-Item -ItemType File -Path ($LogFile)
+        Write-Host "The path $LogFilePath has been created" -ForegroundColor Green   
+    }
+
 } else {
     $OSVersion = "Unknown"
 }
